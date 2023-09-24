@@ -6,6 +6,7 @@ if(dataJson!=null){
     })
     renderSV(listSV)
 }
+
 function themSV(){
     let sv= getValue()
     let isValidMa= kiemTraRong(sv.ma, "spanMaSV")&& kiemTraTrung(sv.ma, "spanMaSV", "*Mã sinh viên đã tồn tại", listSV, "ma")
@@ -16,10 +17,9 @@ function themSV(){
     let jsonData = JSON.stringify(listSV);
     localStorage.setItem("listSV", jsonData);
     console.log(listSV);
-    }
-    
-    
+    }   
 }
+
 function xoaSV(ma){
     let index=listSV.findIndex(item=>{
         return item.ma===ma
@@ -30,6 +30,7 @@ function xoaSV(ma){
     localStorage.setItem("listSV", jsonData)
     console.log(listSV);
 }
+
 function chinhSua(ma){
     let index=listSV.findIndex(item=>{
         return item.ma===ma
@@ -42,6 +43,7 @@ function chinhSua(ma){
     document.querySelector("#txtDiemHoa").value=listSV[index].ly
     document.querySelector("#txtDiemLy").value=listSV[index].hoa
 }
+
 function capNhat(){
 let ma=document.querySelector("#txtMaSV").value
 let index=listSV.findIndex(item=>{
@@ -52,3 +54,16 @@ renderSV(listSV)
 let jsonData= JSON.stringify(listSV)
 localStorage.setItem("listSV", jsonData)
 }
+
+let filterArr = []
+const searchInput= document.querySelector("#txtSearch")
+searchInput.addEventListener("keyup", e =>{
+    const value=e.target.value.toLowerCase()
+    filterArr=listSV.filter(sv=>{
+        if(sv.ten.toLowerCase().includes(value) || sv.ma.toLowerCase().includes(value) || sv.email.toLowerCase().includes(value)){
+            console.log(sv);
+            return sv
+        }
+    })
+    renderSV(filterArr)
+})
